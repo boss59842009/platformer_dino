@@ -44,13 +44,34 @@ class Player(Sprite):
             "left": list(range(10, 17))
         }
 
-    def update(self): # оновлення гравця
+        self.is_jump = False
+        self.jump_count = 25
+
+        self.fall = 0
+        self.gravity = 2
+        self.on_ground = False
+
+    def update(self, platforms): # оновлення гравця
         frames = self.animations[self.action] # номери анімацій в залежності від дій гравця
         self.anim_count += 1 # перемикаємо анімацію
         if self.anim_count >= len(frames) - 1:
             self.anim_count = 0 # обнуляємо номер анімацій коли вони закінчились
         self.image =  pygame.transform.scale(self.images[frames[self.anim_count]], (self.width, self.height))
         
+        self.fall += self.gravity
+        self.rect.y += self.fall
+        hit_platforms = pygame.sprite.spritecollide(self, platforms, False)
+        if hit_platforms:
+            for platform in hit_platforms:
+                if self.fall > 0 and self.rect.bottom > platform.rect.top:
+                    self.rect.bottom = platform.rect.top
+                    self.fall = 0
+                    self.on_ground = True
+        else:
+            self.on_ground = False
+
+
+
         keys_pressed = pygame.key.get_pressed()
 
         if keys_pressed[pygame.K_a]: # рух вліво
@@ -61,3 +82,11 @@ class Player(Sprite):
             self.rect.x += self.speed
         else:
             self.action = "idle" # без руху
+        
+        if not self.is_jump:
+            if keys_pressed[pygame.K_SPACE]:
+                if self.on_ground:
+                    self.is_jump = True
+                    self.fall -= self.jump_count
+        else:
+            self.is_jump = not self.on_ground

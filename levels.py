@@ -10,6 +10,9 @@ level1 = [
     "                                                                      ",
     "                                                                      ",
     "                                                                      ",
+    "                                                                      ",
+    "                                                                      ",
+    "                                                                      ",
     "         -----                                                        ",
     "-------                                                               ",
 ]
@@ -22,7 +25,7 @@ level_objects = pygame.sprite.Group()
 class Camera(object):
     def __init__(self, camera_func, width, height):
         self.camera_func = camera_func
-        self.state = Rect(0, 0, width, height) # прозорий прямокутник з'являється у координата (0,0), він і відіграє роль камери
+        self.state = pygame.Rect(0, 0, width, height) # прозорий прямокутник з'являється у координата (0,0), він і відіграє роль камери
 
     def apply(self, target):
         return target.rect.move(self.state.topleft) # цей метод буде робити всі об'єкти гри видимими для камери
@@ -42,7 +45,7 @@ def camera_config(camera, target_rect):
     t = max(-(camera.height - H), t) # Не виходимо за нижню межу
     t = min(0, t)                    # Не виходимо за верхню межу
 
-    return Rect(l, t, w, h)
+    return pygame.Rect(l, t, w, h)
 
 
 camera = Camera(camera_config, level1_width, level1_height)
@@ -54,6 +57,7 @@ def draw_level(level: list):
             if symbol == "-":
                 platform = MapObject(x, y, 100, 50, platform_image)
                 level_objects.add(platform)
+                platforms.add(platform)
             x += 100
         x = 0
         y += 50
