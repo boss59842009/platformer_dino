@@ -10,15 +10,26 @@ level1 = [
     "                                                                      ",
     "                                                                      ",
     "                                                                      ",
+    " --                                                                   ",
+    "                                                                      ",
+    "                                                                      ",
+    " --                                                                   ",
+    "                                                                      ",
+    "                                                                      ",
+    " --                                                                   ",
     "                                                                      ",
     "                                                                      ",
     "                                                                      ",
-    "         -----                                                        ",
-    "-------                                                               ",
+    " --                                                                   ",
+    "         -                                                            ",
+    "           -            o                                             ",
+    "       o      o    o   --                                             ",
+    "  o  -----   ---   -         o                                        ",
+    "----                        ---                                       ",
 ]
 
 level1_width = len(level1[0]) * 100
-level1_height = len(level1) * 50
+level1_height = len(level1) * 30
 
 level_objects = pygame.sprite.Group()
 
@@ -55,11 +66,15 @@ def draw_level(level: list):
     for row in level:
         for symbol in row:
             if symbol == "-":
-                platform = MapObject(x, y, 100, 50, platform_image)
+                platform = MapObject(x, y, 100, 30, platform_image)
                 level_objects.add(platform)
                 platforms.add(platform)
+            if symbol == "o":
+                coin = MapObject(x, y, 30, 30, coin_image)
+                level_objects.add(coin)
+                coins.add(coin)
             x += 100
         x = 0
-        y += 50
+        y += 30
         
     return level_objects 

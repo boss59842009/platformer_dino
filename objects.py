@@ -48,7 +48,7 @@ class Player(Sprite):
         self.jump_count = 25
 
         self.fall = 0
-        self.gravity = 2
+        self.gravity = 2.5
         self.on_ground = False
 
     def update(self, platforms): # оновлення гравця
@@ -69,7 +69,6 @@ class Player(Sprite):
                     self.on_ground = True
         else:
             self.on_ground = False
-
 
 
         keys_pressed = pygame.key.get_pressed()
