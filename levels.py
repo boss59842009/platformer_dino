@@ -19,12 +19,12 @@ level1 = [
     " --                                                                   ",
     "                                                                      ",
     "                                                                      ",
-    "                                                                      ",
-    " --                                                                   ",
+    "  1                                                                   ",
+    " --        0                                                          ",
     "         -                                                            ",
     "           -            o                                             ",
     "       o      o    o   --                                             ",
-    "  o  -----   ---   -         o                                        ",
+    "  o  -----   ---   -         o     ----                               ",
     "----                        ---                                       ",
 ]
 
@@ -73,8 +73,14 @@ def draw_level(level: list):
                 coin = MapObject(x, y, 30, 30, coin_image)
                 level_objects.add(coin)
                 coins.add(coin)
+            if symbol == "1":
+                key = MapObject(x, y, 30, 30, key_image)
+                level_objects.add(key)
+            if symbol == "0":
+                chest = MapObject(x, y, 80, 60, chest_image)
+                level_objects.add(chest) 
             x += 100
         x = 0
         y += 30
         
-    return level_objects 
+    return level_objects, key, chest
